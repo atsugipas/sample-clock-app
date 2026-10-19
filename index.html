@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Clock</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <h1 class="app__title">Simple Clock</h1>
+
+    <!--
+      ■ 時計本体
+      data-face-color には、下の「カラーパレット」に登録されている
+      data-color-name のいずれかを指定します。
+      ここを書き換えると、ページを開いたときの盤面の色（初期色）が変わります。
+    -->
+    <section class="clock" id="clock" data-face-color="sky" aria-label="時計">
+      <div class="clock__face">
+        <div class="clock__ticks" aria-hidden="true"></div>
+        <div class="clock__hand clock__hand--hour"   id="hand-hour"></div>
+        <div class="clock__hand clock__hand--minute" id="hand-minute"></div>
+        <div class="clock__hand clock__hand--second" id="hand-second"></div>
+        <div class="clock__center"></div>
+      </div>
+      <p class="clock__digital">
+        <time id="digital-time">--:--:--</time>
+      </p>
+      <p class="clock__date" id="digital-date">----/--/--</p>
+    </section>
+
+    <!--
+      ■ カラーパレット
+      盤面の色はここに並んだボタンから選べます。
+      色を増やしたいときは <button> を 1 行追加するだけです。
+
+        data-color-name : 色の名前(英数字。時計の data-face-color で使います)
+        data-color      : 盤面に塗る色(#RRGGBB / rgb() / hsl() / 色の名前 など CSS の色)
+        ボタンの中身    : 画面に表示される色のラベル
+    -->
+    <section class="palette" aria-label="盤面の色を選ぶ">
+      <h2 class="palette__title">盤面の色</h2>
+      <div class="palette__list" id="palette">
+        <button class="swatch" data-color-name="sky"      data-color="#38bdf8">スカイ</button>
+        <button class="swatch" data-color-name="mint"     data-color="#34d399">ミント</button>
+        <button class="swatch" data-color-name="lemon"    data-color="#fde047">レモン</button>
+        <button class="swatch" data-color-name="coral"    data-color="#fb7185">コーラル</button>
+        <button class="swatch" data-color-name="lavender" data-color="#a78bfa">ラベンダー</button>
+        <button class="swatch" data-color-name="snow"     data-color="#f8fafc">スノー</button>
+        <button class="swatch" data-color-name="charcoal" data-color="#334155">チャコール</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

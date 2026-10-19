@@ -1,0 +1,204 @@
+/* =========================================================
+   Simple Clock - スタイル
+   盤面の色は JavaScript が --face-color / --ink-color に
+   セットします。ここでは色の「使い方」だけを決めています。
+   ========================================================= */
+
+:root {
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --card: #1e293b;
+
+  /* 盤面の色(初期値)。script.js が上書きします */
+  --face-color: #38bdf8;
+  /* 盤面の上に描く針・目盛りの色。script.js が盤面の明るさから決めます */
+  --ink-color: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.app {
+  width: min(100% - 32px, 420px);
+  padding: 32px 0;
+  text-align: center;
+}
+
+.app__title {
+  margin: 0 0 24px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 時計 ---------- */
+
+.clock {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.clock__face {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: var(--face-color);
+  box-shadow:
+    0 0 0 6px var(--card),
+    0 20px 40px rgba(0, 0, 0, 0.45);
+  transition: background-color 0.4s ease;
+}
+
+/* 目盛り(script.js が .tick を 12 個生成します) */
+.clock__ticks {
+  position: absolute;
+  inset: 0;
+}
+
+.tick {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 3px;
+  height: 12px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--ink-color);
+  opacity: 0.6;
+  transform-origin: 50% 120px; /* 盤面の中心(260px / 2 - 10px) */
+}
+
+.tick--major {
+  width: 5px;
+  height: 20px;
+  margin-left: -2.5px;
+  opacity: 0.9;
+}
+
+/* 針:下端を中心に回転させる */
+.clock__hand {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  border-radius: 4px;
+  background: var(--ink-color);
+  transform-origin: 50% 100%;
+  transform: translateX(-50%) rotate(0deg);
+}
+
+.clock__hand--hour {
+  width: 8px;
+  height: 70px;
+}
+
+.clock__hand--minute {
+  width: 5px;
+  height: 100px;
+}
+
+.clock__hand--second {
+  width: 2px;
+  height: 115px;
+  opacity: 0.8;
+}
+
+.clock__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink-color);
+  transform: translate(-50%, -50%);
+}
+
+.clock__digital {
+  margin: 16px 0 0;
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.clock__date {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- カラーパレット ---------- */
+
+.palette {
+  margin-top: 32px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--card);
+}
+
+.palette__title {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.palette__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* 色見本ボタン。背景色は script.js が data-color から設定します */
+.swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.1s ease;
+}
+
+/* ボタン左側の丸い色見本 */
+.swatch::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--swatch-color, #888);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.swatch:hover {
+  transform: translateY(-1px);
+}
+
+.swatch:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* 選択中の色 */
+.swatch[aria-pressed="true"] {
+  border-color: var(--swatch-color, #888);
+}
